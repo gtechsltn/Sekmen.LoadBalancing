@@ -1,0 +1,13 @@
+{
+    "javascript": [
+        "/App_Plugins/OutputCacheControl/js/outputcachecontrol.dashboard.js"
+    ],
+    "dashboards":  [
+        {
+            "alias": "outputcachecontrol",
+            "view":  "/app_plugins/OutputCacheControl/views/outputcachecontrol.dashboard.html",
+            "sections":  [ "content" ],
+            "weight": 50
+        }
+    ]
+}

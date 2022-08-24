@@ -1,0 +1,48 @@
+Exercise 1:
+
+dotnet tool install --global dotnet-sql-cache
+
+dotnet sql-cache create "server=<Server>\<Instance>;database=<DBName>;user id=<UserID>;password='<Password>'" dbo DistCache
+
+Example:
+dotnet sql-cache create "server=(local);database=UmbracoLoadBalancingTraining;user id=UmbracoLoadBalancingTraining;password='umbraco'" dbo DistCache
+
+----------------------------------------------------------
+
+Exercise 2:
+
+IF EXIST "..\..\SiteA" (
+copy ..\..\app_offline.htm ..\..\SiteA
+)
+dotnet publish --no-build -c Debug -o ..\..\SiteA
+del ..\..\SiteA\app_offline.htm
+ 
+IF EXIST "..\..\SiteB" (
+copy ..\..\app_offline.htm ..\..\SiteB
+)
+dotnet publish --no-build -c Debug -o ..\..\SiteB
+del ..\..\SiteB\app_offline.htm
+
+----------------------------------------------------------
+
+    <ItemGroup>
+      <Content Include="wwwroot\media\**\*">
+        <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
+----------------------------------------------------------
+
+Exercise 4:
+
+UMBRACO__CMS__HOSTING__SITENAME
+
+----------------------------------------------------------
+
+Exercise 6:
+
+UMBRACO__CMS__SERVERROLE
+
+
+
+

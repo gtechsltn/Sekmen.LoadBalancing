@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language alias="en" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
+  <creator>
+    <name>Umbraco HQ</name>
+    <link>https://github.com/umbraco</link>
+  </creator>
+  <area alias="dashboardTabs">
+    <key alias="outputcachecontrol">Output Cache Control</key>
+  </area>
+</language>

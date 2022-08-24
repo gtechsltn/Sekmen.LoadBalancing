@@ -1,0 +1,23 @@
+﻿<div ng-controller="UmbracoLoadBalancingTraining.Dashboards.OutputCacheControl" class="output-cache-control">
+    <div>
+        <div class="row">
+            <hr />
+        </div>
+        <div class="row">
+            <button preventdefault class="btn btn-primary" ng-click="clearCache()">Clear Output Cache</button>
+        </div>
+        <div class="row">
+            <hr />
+        </div>
+        <div class="row">
+            <div>
+                <div class="alert alert-success" ng-show="cacheclearrequested && cacheclearedsuccess">
+                    Output cache cleared
+                </div>
+                <div class="alert alert-error" ng-show="cacheclearrequested && !cacheclearedsuccess">
+                    <strong>Error</strong>, something went wrong trying to clear the output cache
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

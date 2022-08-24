@@ -1,0 +1,67 @@
+Exercise 3:
+
+<h3>Environment.MachineName: @Environment.MachineName</h3>
+<h3>Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID"): @Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID")</h3>
+
+----------------------------------------------------------
+
+<system.webServer>
+  <rewrite>
+    <rules>
+      <!-- Restrict access to Umbraco -->
+      <rule name="Restrict access" stopProcessing="true">
+        <match url="umbraco$|umbraco/(?!surface\/)(?!api\/)" />
+        <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+          <add input="{HTTP_HOST}" pattern="(([^.]+)\.)?MYSITE-UMBRACO\.azurewebsites\.net" negate="true" />
+          <add input="{HTTP_HOST}" pattern="(([^.]+)\.)?localhost" negate="true" />
+        </conditions>
+        <action type="CustomResponse" statusCode="404"/>
+      </rule>
+    </rules>
+  </rewrite>
+</system.webServer>
+
+----------------------------------------------------------
+
+Exercise 4:
+
+  "Serilog": {
+    "Using": [
+      "Serilog.Sinks.ApplicationInsights"
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "System": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "ApplicationInsights",
+        "Args": {
+          "restrictedToMinimumLevel": "Information",
+          "connectionString": "",
+          "telemetryConverter": "Serilog.Sinks.ApplicationInsights.TelemetryConverters.TraceTelemetryConverter, Serilog.Sinks.ApplicationInsights"
+        }
+      },
+      {
+        "Name": "UmbracoFile",
+        "Args": {
+          "RestrictedToMinimumLevel": "Error"
+        }
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "configure": [
+            {
+              "Name": "Console"
+            }
+          ]
+        }
+      }
+    ]
+  }
+
