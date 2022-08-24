@@ -1,3 +1,8 @@
+using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Web.Website.Controllers;
+using UmbracoLoadBalancingTraining.Web.Controllers;
+using UmbracoLoadBalancingTraining.Web.NotificationHandlers;
+
 namespace UmbracoLoadBalancingTraining.Web
 {
     public class Startup
@@ -38,11 +43,19 @@ namespace UmbracoLoadBalancingTraining.Web
                 options.TableName = "DistCache";
             });
 
+            //Registers the output caching service with the dependency injection system
+            services.AddOutputCaching();
+            services.Configure<UmbracoRenderingDefaultsOptions>(c =>
+            {
+                c.DefaultControllerType = typeof(DefaultController);
+            });
+
 #pragma warning disable IDE0022 // Use expression body for methods
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
                 .AddComposers()
+                .AddNotificationHandler<ContentPublishedNotification, OutputCachePublishedHandler>()
                 .Build();
 #pragma warning restore IDE0022 // Use expression body for methods
 
@@ -59,6 +72,9 @@ namespace UmbracoLoadBalancingTraining.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //Registers the output caching middleware
+            app.UseOutputCaching();
 
             app.UseUmbraco()
                 .WithMiddleware(u =>

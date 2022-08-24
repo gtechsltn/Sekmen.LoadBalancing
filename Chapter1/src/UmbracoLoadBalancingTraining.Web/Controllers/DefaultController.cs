@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
+using WebEssentials.AspNetCore.OutputCaching;
 
 namespace UmbracoLoadBalancingTraining.Web.Controllers
 {
@@ -15,6 +14,7 @@ namespace UmbracoLoadBalancingTraining.Web.Controllers
 
         public override IActionResult Index()
         {
+            HttpContext.EnableOutputCaching(TimeSpan.FromMinutes(60));
             return CurrentTemplate(CurrentPage);
         }
     }

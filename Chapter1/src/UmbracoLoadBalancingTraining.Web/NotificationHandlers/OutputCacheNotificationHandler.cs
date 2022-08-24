@@ -1,23 +1,21 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core.Cache;
+﻿using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.Events;
-using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 using UmbracoLoadBalancingTraining.Web.Notifications;
-//using WebEssentials.AspNetCore.OutputCaching;
+using WebEssentials.AspNetCore.OutputCaching;
+using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 
 namespace UmbracoLoadBalancingTraining.Web.NotificationHandlers
 {
     public class OutputCacheNotificationHandler : CacheRefresherBase<OutputCacheRefresherNotification>
     {
-        //private readonly IOutputCachingService _outputCachingService;
+        private readonly IOutputCachingService _outputCachingService;
         private readonly ILogger<OutputCacheNotificationHandler> _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        public OutputCacheNotificationHandler(AppCaches appCaches, IEventAggregator eventAggregator, ICacheRefresherNotificationFactory factory, //IOutputCachingService outputCachingService,
+        public OutputCacheNotificationHandler(AppCaches appCaches, IEventAggregator eventAggregator, ICacheRefresherNotificationFactory factory, IOutputCachingService outputCachingService,
             ILogger<OutputCacheNotificationHandler> logger, IHostingEnvironment hostingEnvironment) : base(appCaches, eventAggregator, factory)
         {
-            //_outputCachingService = outputCachingService;
+            _outputCachingService = outputCachingService;
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
         }
@@ -30,7 +28,7 @@ namespace UmbracoLoadBalancingTraining.Web.NotificationHandlers
 
         public override void RefreshAll()
         {
-            //_outputCachingService.Clear();
+            _outputCachingService.Clear();
 
             _logger.LogInformation("Output Cache Cleared (Custom) for {SiteName}", _hostingEnvironment.SiteName);
         }
