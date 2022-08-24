@@ -1,8 +1,11 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @using Umbraco.Extensions
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor _httpContextAccessor
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<People>
 @{
     Layout = "master.cshtml";
+    _httpContextAccessor.HttpContext.Session.SetString("mySessionKey", "Hello-World");
 }
 @{
     void SocialLink(string content, string service)
@@ -14,8 +17,9 @@
         }
     }
 }
+<h3>@_httpContextAccessor.HttpContext.Session.GetString("mySessionKey")</h3>
 
-@Html.Partial("~/Views/Partials/SectionHeader.cshtml")
+@await Html.PartialAsync("~/Views/Partials/SectionHeader.cshtml")
 
 <section class="section">
 
@@ -31,7 +35,7 @@
         </nav>
         -->
         <div class="employee-grid">
-            @foreach (Person person in Model.Children<Person>())
+            @foreach (var person in Model.Children<Person>())
             {
 
                 <div class="employee-grid__item">

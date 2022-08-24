@@ -1,17 +1,3 @@
-using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Notifications;
-using Umbraco.Cms.Infrastructure.DependencyInjection;
-using Umbraco.Cms.Web.Website.Controllers;
-using Umbraco.Extensions;
-using UmbracoLoadBalancingTraining.Web.Controllers;
-using UmbracoLoadBalancingTraining.Web.NotificationHandlers;
-
 namespace UmbracoLoadBalancingTraining.Web
 {
     public class Startup
@@ -43,6 +29,15 @@ namespace UmbracoLoadBalancingTraining.Web
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            //Adds Microsoft SQL Server distributed caching services to the specified IServiceCollection 
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = _config.GetConnectionString(
+                    "umbracoDbDSN");
+                options.SchemaName = "dbo";
+                options.TableName = "DistCache";
+            });
+
 #pragma warning disable IDE0022 // Use expression body for methods
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
