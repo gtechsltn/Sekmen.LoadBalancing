@@ -1,31 +1,39 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-      <TargetFramework>net6.0</TargetFramework>
-      <ImplicitUsings>enable</ImplicitUsings>
-      <Nullable>enable</Nullable>
-    </PropertyGroup>
+	<PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="6.0.8" />
-        <PackageReference Include="Umbraco.Cms" Version="10.1.0" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="6.0.8" />
+		<PackageReference Include="Umbraco.Cms" Version="10.1.0" />
+	</ItemGroup>
 
-    <!-- Force windows to use ICU. Otherwise Windows 10 2019H1+ will do it, but older windows 10 and most if not all winodws servers will run NLS -->
-    <ItemGroup>
-        <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
-        <PackageReference Include="Umbraco.TheStarterKit" Version="10.0.0" />
-        <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
-    </ItemGroup>
+	<!-- Force windows to use ICU. Otherwise Windows 10 2019H1+ will do it, but older windows 10 and most if not all winodws servers will run NLS -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+		<PackageReference Include="Umbraco.TheStarterKit" Version="10.0.0" />
+		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="wwwroot\media\**\*">
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
 
-    <PropertyGroup>
-        <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
-    </PropertyGroup>
+	<PropertyGroup>
+		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+	</PropertyGroup>
 
-    <!-- Remove RazorCompileOnBuild and RazorCompileOnPublish when not using ModelsMode InMemoryAuto -->
-    <PropertyGroup>
-        <RazorCompileOnBuild>false</RazorCompileOnBuild>
-        <RazorCompileOnPublish>false</RazorCompileOnPublish>
-    </PropertyGroup>
+	<!-- Remove RazorCompileOnBuild and RazorCompileOnPublish when not using ModelsMode InMemoryAuto -->
+	<PropertyGroup>
+		<RazorCompileOnBuild>false</RazorCompileOnBuild>
+		<RazorCompileOnPublish>false</RazorCompileOnPublish>
+	</PropertyGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="IF EXIST &quot;..\..\SiteA&quot; (&#xD;&#xA;copy ..\..\app_offline.htm ..\..\SiteA&#xD;&#xA;)&#xD;&#xA;dotnet publish --no-build -c Debug -o ..\..\SiteA&#xD;&#xA;del ..\..\SiteA\app_offline.htm&#xD;&#xA; &#xD;&#xA;IF EXIST &quot;..\..\SiteB&quot; (&#xD;&#xA;copy ..\..\app_offline.htm ..\..\SiteB&#xD;&#xA;)&#xD;&#xA;dotnet publish --no-build -c Debug -o ..\..\SiteB&#xD;&#xA;del ..\..\SiteB\app_offline.htm&#xD;&#xA;" />
+	</Target>
 
 </Project>
