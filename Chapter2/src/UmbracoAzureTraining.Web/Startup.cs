@@ -1,3 +1,5 @@
+using Umbraco.Cms.Infrastructure.DependencyInjection;
+
 namespace UmbracoAzureTraining.Web
 {
     public class Startup
@@ -42,6 +44,7 @@ namespace UmbracoAzureTraining.Web
                 .AddWebsite()
                 .AddComposers()
                 .AddAzureBlobMediaFileSystem()
+                .SetServerRegistrar<LoadBalancingTrainingServerRoleAccessor>()
                 .Build();
 #pragma warning restore IDE0022 // Use expression body for methods
 
