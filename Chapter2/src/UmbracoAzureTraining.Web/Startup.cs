@@ -41,6 +41,7 @@ namespace UmbracoAzureTraining.Web
                 .AddBackOffice()
                 .AddWebsite()
                 .AddComposers()
+                .AddAzureBlobMediaFileSystem()
                 .Build();
 #pragma warning restore IDE0022 // Use expression body for methods
 
