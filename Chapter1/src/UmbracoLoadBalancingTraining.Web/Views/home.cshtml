@@ -1,6 +1,5 @@
-﻿
-@using Umbraco.Extensions
-@using Umbraco.Cms.Web.Common.PublishedModels;
+﻿@using Umbraco.Cms.Core.Sync
+@inject IServerRoleAccessor _serverRoleAccessor
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Home>
 @{
     Layout = "master.cshtml";
@@ -10,6 +9,7 @@
          style="background-image: url('@backgroundImage')">
     <div class="section__hero-content">
         <h1>@Model.HeroHeader</h1>
+        <h3>_serverRoleAccessor.CurrentServerRole: @_serverRoleAccessor.CurrentServerRole</h3>
         <p class="section__description">@Model.HeroDescription</p>
         @if (Model.HeroCtalink != null)
         {

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Umbraco.Cms.Core;
+﻿using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Sync;
 
 namespace UmbracoLoadBalancingTraining.Web
@@ -21,12 +20,9 @@ namespace UmbracoLoadBalancingTraining.Web
 
                 var serverRole = ServerRole.Subscriber;
 
-                if (serverRoleConfig != null)
+                if (serverRoleConfig != null && Enum<ServerRole>.TryParse(serverRoleConfig, out var configServerRole))
                 {
-                    if (Enum<ServerRole>.TryParse(serverRoleConfig, out var configServerRole))
-                    {
-                        serverRole = configServerRole;
-                    }
+                    serverRole = configServerRole;
                 }
 
                 return serverRole;

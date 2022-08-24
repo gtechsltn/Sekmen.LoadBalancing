@@ -1,4 +1,5 @@
 using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Infrastructure.DependencyInjection;
 using Umbraco.Cms.Web.Website.Controllers;
 using UmbracoLoadBalancingTraining.Web.Controllers;
 using UmbracoLoadBalancingTraining.Web.NotificationHandlers;
@@ -58,6 +59,7 @@ namespace UmbracoLoadBalancingTraining.Web
                 .AddNotificationHandler<ContentCacheRefresherNotification, OutputCacheContentCacheHandler>()
                 .AddNotificationHandler<MediaCacheRefresherNotification, OutputCacheContentCacheHandler>()
                 .AddNotificationHandler<DictionaryCacheRefresherNotification, OutputCacheContentCacheHandler>()
+                .SetServerRegistrar<LoadBalancingTrainingServerRoleAccessor>()
                 .Build();
 #pragma warning restore IDE0022 // Use expression body for methods
 
