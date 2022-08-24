@@ -55,7 +55,9 @@ namespace UmbracoLoadBalancingTraining.Web
                 .AddBackOffice()
                 .AddWebsite()
                 .AddComposers()
-                .AddNotificationHandler<ContentPublishedNotification, OutputCachePublishedHandler>()
+                .AddNotificationHandler<ContentCacheRefresherNotification, OutputCacheContentCacheHandler>()
+                .AddNotificationHandler<MediaCacheRefresherNotification, OutputCacheContentCacheHandler>()
+                .AddNotificationHandler<DictionaryCacheRefresherNotification, OutputCacheContentCacheHandler>()
                 .Build();
 #pragma warning restore IDE0022 // Use expression body for methods
 
