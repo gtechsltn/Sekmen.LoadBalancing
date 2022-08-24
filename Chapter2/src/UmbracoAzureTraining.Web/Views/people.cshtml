@@ -1,8 +1,11 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @using Umbraco.Extensions
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor _httpContextAccessor
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<People>
 @{
     Layout = "master.cshtml";
+    _httpContextAccessor.HttpContext.Session.SetString("mySessionKey", "Hello World");
 }
 @{
     void SocialLink(string content, string service)

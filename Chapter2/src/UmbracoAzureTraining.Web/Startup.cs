@@ -1,13 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Infrastructure.DependencyInjection;
-using Umbraco.Extensions;
-
 namespace UmbracoAzureTraining.Web
 {
     public class Startup
@@ -39,6 +29,13 @@ namespace UmbracoAzureTraining.Web
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = _config.GetConnectionString("MyRedisConStr");
+                options.InstanceName = "UmbracoTraining";
+            });
+
+
 #pragma warning disable IDE0022 // Use expression body for methods
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
