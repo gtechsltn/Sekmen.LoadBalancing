@@ -37,6 +37,7 @@ namespace UmbracoAzureTraining.Web
                 options.InstanceName = "UmbracoTraining";
             });
 
+            services.AddApplicationInsightsTelemetry();
 
 #pragma warning disable IDE0022 // Use expression body for methods
             services.AddUmbraco(_env, _config)
